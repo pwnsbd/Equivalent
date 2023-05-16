@@ -5,7 +5,9 @@ import os
 class Equivalent:
     def __init__(self) -> None:
         self.data = dict()
-        with open("equivalent.json", "w") as file:
+
+    def create_file(self,)-> None:
+        with open("../data/equivalent.json", "w") as file:
             json.dump(self.data, file, indent=2)
 
     def add(self, command, function):
@@ -16,9 +18,9 @@ class Equivalent:
         pass 
 
     def delete_file(self):
-        os.remove("equivalent.json")
+        os.remove("../data/equivalent.json")
 
 
 EVL = Equivalent()
-EVL.add("cli", "function")
+#EVL.create_file()
 EVL.delete_file()
