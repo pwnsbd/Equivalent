@@ -1,6 +1,5 @@
 import json
 import os
-import time
 
 
 class Equivalent:
@@ -17,9 +16,14 @@ class Equivalent:
     def file_status(self) -> bool:
         return os.path.exists("../data/equivalent.json")
 
-    def add(self, command, function):
-        self.data[command] = function
-        print("Data is added. \n", self.data)
+    def add(self, command, function) -> None:
+        if self.file_status():
+            self.data[command] = function
+            with open("../data/equivalent.json", "w") as file:
+                json.dump(self.data, file, indent=2)
+            print("Data is added. \n", self.data)
+        else:
+            print("File has not been created :(")
 
     def display(self):
         pass
@@ -35,5 +39,4 @@ class Equivalent:
 if __name__ == "__main__":
     eql = Equivalent()
     eql.create_file()
-    time.sleep(5)
-    eql.delete_file()
+    eql.add("cli node command", " Node API function")
