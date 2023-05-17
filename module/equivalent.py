@@ -1,6 +1,6 @@
 import json
 import os
-
+from prettytable import PrettyTable
 
 class Equivalent:
     def __init__(self) -> None:
@@ -9,6 +9,8 @@ class Equivalent:
     def create_file(
         self,
     ) -> None:
+        if not os.path.exists("../data"):
+            os.makedirs("../data")
         with open("../data/equivalent.json", "w") as file:
             json.dump(self.data, file, indent=2)
             print("File has been created!!")
@@ -26,7 +28,15 @@ class Equivalent:
             print("File has not been created :(")
 
     def display(self):
-        pass
+        if self.file_status():
+            with open(file="../data/equivalent.json", mode="r") as data_file:
+                self.data = json.load(data_file)
+            table = PrettyTable(["CLI", "Function"])
+            for key, value in self.data.items():
+                table.add_row([key, value])
+            print(table)
+        else:
+            print("File does not exist :(")
 
     def delete_file(self):
         if self.file_status():
@@ -40,3 +50,5 @@ if __name__ == "__main__":
     eql = Equivalent()
     eql.create_file()
     eql.add("cli node command", " Node API function")
+    eql.add("cli node command 2", " Node API function 2")
+    eql.display()
